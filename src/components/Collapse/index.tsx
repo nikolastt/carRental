@@ -1,12 +1,18 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { Container, Icon, Title, Header, Content, Input } from "./styles";
 import { FcCollapse } from "react-icons/fc";
 
 import cars from "../../repositories/cars";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { checked } from "../../redux/checkBoxSlice";
 
 const Collapse: React.FC = () => {
   const [isCollapseUp, setIsCollapseUp] = useState(true);
+  const dispatch = useDispatch();
+
+  const number = useSelector((state: RootState) => state.checkBox);
 
   const categoryes = useMemo(() => {
     let uniqueCategoryes: string[] = [];
@@ -25,6 +31,9 @@ const Collapse: React.FC = () => {
   function handleCollapse() {
     setIsCollapseUp(!isCollapseUp);
   }
+  useEffect(() => {
+    console.log(number);
+  }, [number]);
 
   return (
     <Container>
@@ -38,10 +47,16 @@ const Collapse: React.FC = () => {
         ""
       ) : (
         <Content>
-          {categoryes.map((item) => {
+          {categoryes.map((item, index) => {
             return (
-              <Input>
-                <input type="checkbox" name={item} />
+              <Input key={index}>
+                <input
+                  type="checkbox"
+                  onChange={(e) => {
+                    dispatch(checked(e.target.name));
+                  }}
+                  name={item}
+                />
                 <label htmlFor={item}>{item}</label>
               </Input>
             );

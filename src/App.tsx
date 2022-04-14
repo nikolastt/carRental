@@ -4,6 +4,8 @@ import Booking from "./pages/Booking";
 
 import GlobalStyles from "./styles/GlobalStyles";
 import light from "./styles/themes/light";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const App: React.FC = () => {
   return (
