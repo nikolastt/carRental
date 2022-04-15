@@ -1,8 +1,11 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit' 
 
-const initialState: Object[] = [
+interface ICheckBoxName {
+  name: string;
+  checked: boolean;
+}
 
-]
+const initialState: Object[] = [];
 
 
 export const checkBoxSlice = createSlice({
@@ -10,12 +13,11 @@ export const checkBoxSlice = createSlice({
     initialState,
     reducers: {
       checked: (state, action) => {             
-        return [...state, {name: action.payload, checked:true}]
+        return [...state, action.payload]
       },
-      unChecked: (state, action: PayloadAction<React.ChangeEvent<HTMLInputElement>>) => {
-        return {...state, name: '', checked: false}
-      },
-      
+      unChecked: (state, action) => {
+        return [...state.filter(item => item !== action.payload)]        
+      },      
     },
   })
   

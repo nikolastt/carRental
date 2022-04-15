@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AppBar from "../../components/AppBar";
 import Cards from "../../components/Cards/intex";
 
@@ -7,7 +7,24 @@ import { Container, Content } from "./styles";
 import cars from "../../repositories/cars";
 import SideLeft from "../../components/SideLeft";
 
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+
 const Booking: React.FC = () => {
+  const [carsInScreen, setCarsInScreen] = useState(cars);
+  const number = useSelector((state: RootState) => state.checkBox);
+
+  function handleCarsInScreen() {
+    const newCars = cars.filter((item) => number.includes(item.category));
+    setCarsInScreen(newCars);
+  }
+
+  useEffect(() => {
+    {
+      number.length > 0 ? handleCarsInScreen() : setCarsInScreen(cars);
+    }
+  }, [number]);
+
   return (
     <>
       <AppBar />
@@ -15,8 +32,8 @@ const Booking: React.FC = () => {
         <SideLeft />
 
         <Content>
-          {cars.map((item, index) => {
-            index++;
+          {carsInScreen.map((item, index) => {
+            console.log(carsInScreen);
             return (
               <Cards
                 key={item.model}
