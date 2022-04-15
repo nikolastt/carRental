@@ -5,7 +5,7 @@ interface ICollapseProps{
 }
 
 export const Container = styled.div`
-   
+   margin-bottom: 1rem;
 `;
 
 export const Icon = styled.div<ICollapseProps>`
@@ -24,16 +24,21 @@ export const Title = styled.p`
 `
 
 export const Header = styled.div`
-    display: flex;    
+    display: flex;   
+    cursor: pointer; 
 `
 
 export const Content = styled.div`
     display: flex;
     flex-direction: column;
+    padding:  1rem;
     
 `
 
 export const Input = styled.div`
+
+    margin-bottom: 0.5rem;
+
     & input{
         margin-right: 0.5rem;
     }

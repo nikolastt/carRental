@@ -1,5 +1,6 @@
 import React from "react";
-import Collapse from "../Collapse";
+import CarSeats from "../CarSeats";
+import FilterByCategoryCollapse from "../FilterByCategoryCollapse";
 
 import { Container, Title } from "./styles";
 
@@ -8,7 +9,8 @@ const SideLeft: React.FC = () => {
     <Container>
       <Title>Filtrar 🎯 </Title>
       <hr />
-      <Collapse />
+      <FilterByCategoryCollapse />
+      <CarSeats />
     </Container>
   );
 };

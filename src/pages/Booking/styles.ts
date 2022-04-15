@@ -14,5 +14,6 @@ export const Content = styled.div`
     flex-wrap: wrap;
     height: 100%;
     width: 80%;
+    justify-content: space-between;
 `;
 

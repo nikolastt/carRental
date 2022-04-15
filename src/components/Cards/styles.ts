@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-    width: 30%;
-    margin: 1rem;
+    width: 31%;
+    margin: 1rem 0 1rem 1rem;
     height: 250px;
 
     .card{

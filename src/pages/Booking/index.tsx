@@ -12,10 +12,12 @@ import { RootState } from "../../redux/store";
 
 const Booking: React.FC = () => {
   const [carsInScreen, setCarsInScreen] = useState(cars);
-  const number = useSelector((state: RootState) => state.checkBox);
+  const number = useSelector((state: RootState) => state.filterByCategory);
 
   function handleCarsInScreen() {
-    const newCars = cars.filter((item) => number.includes(item.category));
+    const newCars = cars.filter((item) =>
+      number.includes(item.category.toLowerCase())
+    );
     setCarsInScreen(newCars);
   }
 
@@ -33,7 +35,6 @@ const Booking: React.FC = () => {
 
         <Content>
           {carsInScreen.map((item, index) => {
-            console.log(carsInScreen);
             return (
               <Cards
                 key={item.model}

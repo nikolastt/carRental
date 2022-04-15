@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import  checkBoxReducer  from './checkBoxSlice'
+import  filterByCategory  from './filterByCategory'
 
 export const store = configureStore({
   reducer: {
-      checkBox: checkBoxReducer,
+      filterByCategory,
   },
 })
 
