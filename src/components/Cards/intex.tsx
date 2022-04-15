@@ -19,18 +19,25 @@ interface ICardProps {
   img: string;
   amount: string;
   autoMaker: string;
+  width?: string;
 }
 
-const Cards: React.FC<ICardProps> = ({ title, img, amount, autoMaker }) => {
+const Cards: React.FC<ICardProps> = ({
+  title,
+  img,
+  amount,
+  autoMaker,
+  width,
+}) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const theme = useTheme();
 
   return (
-    <Container>
+    <Container width={width}>
       <Card className="card">
         <Card.Header className="cardHeader">
           <ContentHeader>
-            <Card.Title>
+            <Card.Title className="cardTitle">
               {autoMaker + " "}
               {title}
             </Card.Title>
@@ -40,7 +47,7 @@ const Cards: React.FC<ICardProps> = ({ title, img, amount, autoMaker }) => {
               {isFavorite ? (
                 <MdFavorite size={20} color="red" />
               ) : (
-                <MdFavoriteBorder size={20} />
+                <MdFavoriteBorder size={20} color="white" />
               )}
             </IconHeaderFavoriteContainer>
           </ContentHeader>
@@ -48,8 +55,8 @@ const Cards: React.FC<ICardProps> = ({ title, img, amount, autoMaker }) => {
         <Card.Img className="cardImg" variant="bottom" src={img} />
         <Card.Footer className="cardFooter">
           <ContentFooter>
-            <FaUser size={18} color={theme.colors.primary} />
-            <GiGearStickPattern size={18} color={theme.colors.primary} />
+            <FaUser size={18} color={theme.colors.white} />
+            <GiGearStickPattern size={18} color={theme.colors.white} />
 
             <Amount>
               R$

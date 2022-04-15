@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-    width: 33.3%;    
+interface IContainerProps{
+    width?: string;
+}
+
+export const Container = styled.div<IContainerProps>`
+    width: ${props => props.width};    
     height: 250px;
     padding: 1rem;
 
@@ -11,11 +15,12 @@ export const Container = styled.div`
         border-radius: 1.5rem;
         border: none;
         overflow: hidden;
+        background-color: ${props => props.theme.colors.info};
     }
     .cardHeader{
         height: 15%;
         border: none;
-        background-color: ${props => props.theme.colors.white};
+        background-color: ${props => props.theme.colors.info};
     }
     .cardImg{
         height: 70%;
@@ -25,7 +30,13 @@ export const Container = styled.div`
     .cardFooter{
         height: 15%;
         border: none;
-        background-color: ${props => props.theme.colors.white};
+        background-color: ${props => props.theme.colors.info};
+    }
+
+    .cardTitle{
+        color: ${props => props.theme.colors.white};
+        /* font-family: 'Roboto'; */
+        
     }
 `;
 
@@ -55,7 +66,7 @@ export const Amount = styled.p`
     font-size: 1rem;
     display: flex;
     align-items: center;
-    color: ${props => props.theme.colors.black};
+    color: ${props => props.theme.colors.white};
 
     & strong{
         margin-left: 0.2rem;

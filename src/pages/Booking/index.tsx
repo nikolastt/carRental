@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import AppBar from "../../components/AppBar";
 import Cards from "../../components/Cards/intex";
 
 import { Container, Content } from "./styles";
@@ -29,7 +28,6 @@ const Booking: React.FC = () => {
 
   return (
     <>
-      <AppBar />
       <Container>
         <SideLeft />
 
@@ -42,6 +40,7 @@ const Booking: React.FC = () => {
                 img={item.img}
                 amount={item.amount}
                 autoMaker={item.automaker}
+                width="33.3%"
               />
             );
           })}

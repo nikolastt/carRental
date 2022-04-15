@@ -1,13 +1,18 @@
 import React from "react";
 
-import { Container, Login, Navigation, Ul } from "./styles";
+import { Container, Login, Navigation, Ul, Logo } from "./styles";
 
 const AppBar: React.FC = () => {
   return (
     <Container>
-      logo
+      <Logo>
+        <span>Perfect</span> Wheels
+      </Logo>
       <Navigation>
         <Ul>
+          <li>
+            <a href="/services">Services</a>
+          </li>
           <li>
             <a href="/">Booking</a>
           </li>

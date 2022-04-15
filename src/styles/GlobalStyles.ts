@@ -8,17 +8,24 @@ export default createGlobalStyle`
         box-sizing: border-box;        
     }
 
+    html{
+        background-color: ${props => props.theme.colors.backgroundColor}
+    }
+
     html, body, #root{
         padding: 0 1rem ;
         height: 100%;
+        background-color: ${props => props.theme.colors.backgroundColor};
+        color: ${props => props.theme.colors.white}
     }
 
     *, button, input{
         border: none;
         outline: none;
-        font-family: 'Roboto', sans-serif;        
-        
+        font-family: 'Roboto', sans-serif;
     }
+
+
 
     button{
         cursor: pointer;
