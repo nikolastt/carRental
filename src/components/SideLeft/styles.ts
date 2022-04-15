@@ -4,8 +4,9 @@ export const Container = styled.div`
   width: 20%;
   height: 100%;
   background-color: ${props => props.theme.colors.white};
-  border-radius: 0.5rem;
+  border-radius: 1.5rem;
   margin-top: 1rem;
+  margin-left: 1rem;
   padding: 1rem;
 `;
 

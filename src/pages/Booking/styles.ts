@@ -5,8 +5,8 @@ export const Container = styled.div`
   width: 100%;
   min-height: 100%;
   background-color: ${props => props.theme.colors.backgroundColor};  
-  border-radius: 1rem;  
-  padding: 1rem;
+  border-radius: 1.5rem;  
+  padding: 1rem 0;
 `;
 
 export const Content = styled.div`
@@ -14,6 +14,6 @@ export const Content = styled.div`
     flex-wrap: wrap;
     height: 100%;
     width: 80%;
-    justify-content: space-between;
+    
 `;
 

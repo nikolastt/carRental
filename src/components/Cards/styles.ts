@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-    width: 31%;
-    margin: 1rem 0 1rem 1rem;
+    width: 33.3%;    
     height: 250px;
+    padding: 1rem;
 
     .card{
         height: 100%;
         padding: 0.5rem;
-        border-radius: 2rem;
+        border-radius: 1.5rem;
         border: none;
         overflow: hidden;
     }
