@@ -14,13 +14,23 @@ export const Container = styled.div<IContainerProps>`
         padding: 0.5rem;
         border-radius: 1.5rem;
         border: none;
-        overflow: hidden;
-        background-color: ${props => props.theme.colors.info};
+        overflow: hidden;        
+        border: 1px solid ${props => props.theme.colors.info};
+
+        background-image: linear-gradient(120deg, #101010 0%, #ee7116 100%);
+
+
+        background: rgba(238, 113, 22, 0.05);
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 1);
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        
     }
     .cardHeader{
         height: 15%;
         border: none;
-        background-color: ${props => props.theme.colors.info};
+        background: transparent;
     }
     .cardImg{
         height: 70%;
@@ -30,7 +40,7 @@ export const Container = styled.div<IContainerProps>`
     .cardFooter{
         height: 15%;
         border: none;
-        background-color: ${props => props.theme.colors.info};
+        background: transparent;
     }
 
     .cardTitle{

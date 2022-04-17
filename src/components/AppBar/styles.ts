@@ -39,6 +39,13 @@ export const Logo = styled.h2`
     font-family: 'Lora';
     font-size: 25px;
     color: ${props => props.theme.colors.white};
+    cursor: pointer;
+    
+    & .link{
+        text-decoration: none;
+        color: inherit;
+    }
+
 
     & span{
         font-family: 'Lora';

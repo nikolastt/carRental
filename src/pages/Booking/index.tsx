@@ -8,6 +8,7 @@ import SideLeft from "../../components/SideLeft";
 
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import AppBar from "../../components/AppBar";
 
 const Booking: React.FC = () => {
   const [carsInScreen, setCarsInScreen] = useState(cars);
@@ -28,6 +29,7 @@ const Booking: React.FC = () => {
 
   return (
     <>
+      <AppBar />
       <Container>
         <SideLeft />
 

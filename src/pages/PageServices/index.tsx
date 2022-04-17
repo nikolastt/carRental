@@ -22,6 +22,7 @@ import Cards from "../../components/Cards/intex";
 import IconInformation from "../../components/IconInformation";
 
 import Cars from "../../repositories/cars";
+import AppBar from "../../components/AppBar";
 
 const pageServices: React.FC = () => {
   function getRandomNumber() {
@@ -49,71 +50,74 @@ const pageServices: React.FC = () => {
   }, []);
 
   return (
-    <Container>
-      <PageHeader>
-        <Title>
-          Alugue Seu <br />
-          Veículo
-        </Title>
-        <Img>
-          <Gradient></Gradient>
-          <img src="\src\utils\images\veicleHomePage.png" alt="" />
-        </Img>
-      </PageHeader>
-      <Swiper
-        effect={"coverflow"}
-        grabCursor={true}
-        centeredSlides={true}
-        slidesPerView={2}
-        coverflowEffect={{
-          rotate: 50,
-          stretch: 0,
-          depth: 50,
-          modifier: 1,
-          slideShadows: false,
-        }}
-        pagination={true}
-        navigation={true}
-        modules={[EffectCoverflow, Pagination, Navigation]}
-        className="mySwiper"
-      >
-        {carsInPromotion?.map((car, index) => {
-          return (
-            <SwiperSlide key={car.model + index}>
-              <Cards
-                title={car.model}
-                img={car.img}
-                amount={car.amount}
-                autoMaker={car.automaker}
-              />
-            </SwiperSlide>
-          );
-        })}
-      </Swiper>
+    <>
+      <AppBar />
+      <Container>
+        <PageHeader>
+          <Title>
+            Alugue Seu <br />
+            Veículo
+          </Title>
+          <Img>
+            <Gradient></Gradient>
+            <img src="\src\utils\images\veicleHomePage.png" alt="" />
+          </Img>
+        </PageHeader>
+        <Swiper
+          effect={"coverflow"}
+          grabCursor={true}
+          centeredSlides={true}
+          slidesPerView={2}
+          coverflowEffect={{
+            rotate: 50,
+            stretch: 0,
+            depth: 50,
+            modifier: 1,
+            slideShadows: false,
+          }}
+          pagination={true}
+          navigation={true}
+          modules={[EffectCoverflow, Pagination, Navigation]}
+          className="mySwiper"
+        >
+          {carsInPromotion?.map((car, index) => {
+            return (
+              <SwiperSlide key={car.model + index}>
+                <Cards
+                  title={car.model}
+                  img={car.img}
+                  amount={car.amount}
+                  autoMaker={car.automaker}
+                />
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
 
-      <SectionAdvantage>
-        <TitleSectionAdvantage>Nossas Vantagens</TitleSectionAdvantage>
-        <ContentSectionAdvantage>
-          <IconInformation
-            Title="+50 CARROS"
-            Description="Mais de 50 carros com categorias diferentes"
-            SrcImg="\src\utils\images\carro-eletrico.png"
-          />
+        <SectionAdvantage>
+          <TitleSectionAdvantage>Nossas Vantagens</TitleSectionAdvantage>
+          <ContentSectionAdvantage>
+            <IconInformation
+              Title="+50 CARROS"
+              Description="Mais de 50 carros com categorias diferentes"
+              SrcImg="\src\utils\images\carro-eletrico.png"
+            />
 
-          <IconInformation
-            Title="PREÇOS BAIXOS"
-            Description="Promoções imperdíveis"
-            SrcImg="\src\utils\images\low-price.png"
-          />
+            <IconInformation
+              Title="PREÇOS BAIXOS"
+              Description="Promoções imperdíveis"
+              SrcImg="\src\utils\images\low-price.png"
+            />
 
-          <IconInformation
-            Title="SUPORTE 24 HORAS"
-            Description="Suporte disponível 24 horas, para dúvidas."
-            SrcImg="\src\utils\images\customer-service.png"
-          />
-        </ContentSectionAdvantage>
-      </SectionAdvantage>
-    </Container>
+            <IconInformation
+              Title="SUPORTE 24 HORAS"
+              Description="Suporte disponível 24 horas, para dúvidas."
+              SrcImg="\src\utils\images\customer-service.png"
+            />
+          </ContentSectionAdvantage>
+        </SectionAdvantage>
+      </Container>
+    </>
   );
 };
 
