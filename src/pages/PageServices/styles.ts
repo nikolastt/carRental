@@ -81,3 +81,12 @@ export const ContentSectionAdvantage = styled.div`
   display: flex;
   justify-content: center;
 `
+
+
+export const SideLeft = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+export const InfoDate = styled.div`
+
+`

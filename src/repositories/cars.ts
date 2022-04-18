@@ -6,6 +6,8 @@ const cars = [
     typeFuel: "flex",
     category: "compacto",
     img: "https://storage.googleapis.com/storage-public-images/movidafrotas/ARGO_1.jpg",
+    seats: 4,
+
   },
   {
     model: "HB20 Vision",
@@ -14,6 +16,7 @@ const cars = [
     typeFuel: "g",
     category: "compacto",
     img: "https://storage.googleapis.com/storage-public-images/movidafrotas/HB20_1.png",
+    seats: 4,
   },
   {
     model: "Kwid Zen",
@@ -22,6 +25,7 @@ const cars = [
     typeFuel: "flex",
     category: "compacto",
     img: "https://storage.googleapis.com/storage-public-images/movidafrotas/KWID1.png",
+    seats: 4,
   },
   {
     model: "Mobi Like",
@@ -30,6 +34,7 @@ const cars = [
     typeFuel: "flex",
     category: "compacto",
     img: "https://storage.googleapis.com/storage-public-images/movidafrotas/MOBI1.png",
+    seats: 4,
   },
   {
     model: "Leaf",
@@ -38,6 +43,7 @@ const cars = [
     typeFuel: "eletrico",
     category: "compacto",
     img: "https://storage.googleapis.com/storage-public-images/movidafrotas/LEAF1.png",
+    seats: 4,
   },
   {
     model: "COOPER SE Exclusive",
@@ -46,6 +52,7 @@ const cars = [
     typeFuel: "eletrico",
     category: "compacto",
     img: "https://storage.googleapis.com/storage-public-images/movidafrotas/COOPER1.png",
+    seats: 4,
   },
   {
     model: "Pegeout 208 Allure",
@@ -54,6 +61,7 @@ const cars = [
     typeFuel: "eletrico",
     category: "compacto",
     img: "https://storage.googleapis.com/storage-public-images/movidafrotas/PEUGEOT208_1.png",
+    seats: 4,
   },
 
   {
@@ -63,6 +71,7 @@ const cars = [
     typeFuel: "flex",
     category: "sedan",
     img: "https://storage.googleapis.com/storage-public-images/movidafrotas/CRONOS_1.jpg",
+    seats: 4,
   },
   {
     model: "HB20S Vision",
@@ -71,6 +80,7 @@ const cars = [
     typeFuel: "g",
     category: "sedan",
     img: "https://storage.googleapis.com/storage-public-images/movidafrotas/HB20S_2.png",
+    seats: 4,
   },
   {
     model: "Versa Advance",
@@ -79,6 +89,7 @@ const cars = [
     typeFuel: "g",
     category: "sedan",
     img: "https://storage.googleapis.com/storage-public-images/movidafrotas/VERSA2.png",
+    seats: 4,
   },
   {
     model: "Versa Exclusive",
@@ -87,6 +98,7 @@ const cars = [
     typeFuel: "g",
     category: "sedan",
     img: "https://storage.googleapis.com/storage-public-images/movidafrotas/VERSA2.png",
+    seats: 4,
   },
   {
     model: "Logan Zen",
@@ -95,6 +107,7 @@ const cars = [
     typeFuel: "flex",
     category: "sedan",
     img: "https://storage.googleapis.com/storage-public-images/movidafrotas/LOGAN2.png",
+    seats: 4,
   },
 
   {
@@ -104,6 +117,7 @@ const cars = [
     typeFuel: "flex",
     category: "SUV",
     img: "https://storage.googleapis.com/storage-public-images/movidafrotas/C4CACTUSFEEL1.png",
+    seats: 4,
   },
   {
     model: "Creta",
@@ -112,6 +126,7 @@ const cars = [
     typeFuel: "g",
     category: "SUV",
     img: "https://storage.googleapis.com/storage-public-images/movidafrotas/CRETA1.png",
+    seats: 4,
   },
   {
     model: "Kicks Advance",
@@ -120,6 +135,7 @@ const cars = [
     typeFuel: "g",
     category: "SUV",
     img: "https://storage.googleapis.com/storage-public-images/movidafrotas/KICKSADVANCE1.png",
+    seats: 4,
   },
   {
     model: "Kicks Exclusive",
@@ -128,6 +144,7 @@ const cars = [
     typeFuel: "g",
     category: "SUV",
     img: "https://storage.googleapis.com/storage-public-images/movidafrotas/KICKSEXCLUSIVE1.png",
+    seats: 4,
   },
   {
     model: "Tiggo 8",
@@ -136,6 +153,7 @@ const cars = [
     typeFuel: "g",
     category: "SUV",
     img: "https://storage.googleapis.com/storage-public-images/movidafrotas/TIGGO8_1.png",
+    seats: 4,
   },
   {
     model: "2008",
@@ -144,6 +162,7 @@ const cars = [
     typeFuel: "flex",
     category: "SUV",
     img: "https://storage.googleapis.com/storage-public-images/movidafrotas/PEUGEOT2008_1.png",
+    seats: 4,
   },
   {
     model: "Compass Longitude",
@@ -152,6 +171,7 @@ const cars = [
     typeFuel: "flex",
     category: "SUV",
     img: "https://storage.googleapis.com/storage-public-images/movidafrotas/COMPASSTD350_1.png",
+    seats: 4,
   },
   {
     model: "XC 60",
@@ -160,6 +180,7 @@ const cars = [
     typeFuel: "hibrido",
     category: "SUV",
     img: "https://storage.googleapis.com/storage-public-images/movidafrotas/X60_2.png",
+    seats: 4,
   },
   {
     model: "Tracker",
@@ -168,6 +189,7 @@ const cars = [
     typeFuel: "flex",
     category: "SUV",
     img: "https://storage.googleapis.com/storage-public-images/movidafrotas/TRACKER1.png",
+    seats: 4,
   },
   {
     model: "Pulse",
@@ -176,6 +198,7 @@ const cars = [
     typeFuel: "flex",
     category: "SUV",
     img: "https://storage.googleapis.com/storage-public-images/movidafrotas/PULSE1.png",
+    seats: 4,
   },
 
   {
@@ -185,6 +208,7 @@ const cars = [
     typeFuel: "diesel",
     category: "picape",
     img: "https://storage.googleapis.com/storage-public-images/movidafrotas/FRONTIERATTACK1.png",
+    seats: 4,
   },
   {
     model: "Frontier XE",
@@ -193,6 +217,7 @@ const cars = [
     typeFuel: "g",
     category: "picape",
     img: "https://storage.googleapis.com/storage-public-images/movidafrotas/FRONTIERXE1.png",
+    seats: 4,
   },
   {
     model: "Toro Endurance",
@@ -201,6 +226,7 @@ const cars = [
     typeFuel: "flex",
     category: "picape",
     img: "https://storage.googleapis.com/storage-public-images/movidafrotas/TORO_2.png",
+    seats: 4,
   },
 
   {
@@ -210,6 +236,7 @@ const cars = [
     typeFuel: "flex",
     category: "utilitario",
     img: "https://storage.googleapis.com/storage-public-images/movidafrotas/FIORINO.png",
+    seats: 4,
   },
 ];
 

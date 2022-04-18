@@ -72,15 +72,24 @@ export const IconHeaderFavoriteContainer = styled.div`
 `;
 
 export const Amount = styled.p`
+    width: 40%;
     margin-left: auto;
     font-size: 1rem;
     display: flex;
     align-items: center;
     color: ${props => props.theme.colors.white};
+    
 
     & strong{
         margin-left: 0.2rem;
     }
+`
+
+export const SideLeftContentFooter = styled.div`
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+
 `
 
 

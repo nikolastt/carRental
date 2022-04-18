@@ -12,6 +12,7 @@ import {
   ContentHeader,
   IconHeaderFavoriteContainer,
   Amount,
+  SideLeftContentFooter,
 } from "./styles";
 
 interface ICardProps {
@@ -20,6 +21,8 @@ interface ICardProps {
   amount: string;
   autoMaker: string;
   width?: string;
+  isTypeFavorite?: boolean;
+  seats: number | null;
 }
 
 const Cards: React.FC<ICardProps> = ({
@@ -28,6 +31,8 @@ const Cards: React.FC<ICardProps> = ({
   amount,
   autoMaker,
   width,
+  isTypeFavorite,
+  seats,
 }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const theme = useTheme();
@@ -41,25 +46,31 @@ const Cards: React.FC<ICardProps> = ({
               {autoMaker + " "}
               {title}
             </Card.Title>
-            <IconHeaderFavoriteContainer
-              onClick={() => setIsFavorite(!isFavorite)}
-            >
-              {isFavorite ? (
-                <MdFavorite size={20} color="red" />
-              ) : (
-                <MdFavoriteBorder size={20} color="white" />
-              )}
-            </IconHeaderFavoriteContainer>
+            {isTypeFavorite ?? (
+              <IconHeaderFavoriteContainer
+                onClick={() => setIsFavorite(!isFavorite)}
+              >
+                {isFavorite ? (
+                  <MdFavorite size={20} color="red" />
+                ) : (
+                  <MdFavoriteBorder size={20} color="white" />
+                )}
+              </IconHeaderFavoriteContainer>
+            )}
           </ContentHeader>
         </Card.Header>
         <Card.Img className="cardImg" variant="bottom" src={img} />
         <Card.Footer className="cardFooter">
           <ContentFooter>
-            <FaUser size={18} color={theme.colors.white} />
-            <GiGearStickPattern size={18} color={theme.colors.white} />
+            <SideLeftContentFooter>
+              <FaUser size={18} color={theme.colors.white} />
+              <p>{}</p>
+              <GiGearStickPattern size={18} color={theme.colors.white} />
+            </SideLeftContentFooter>
 
             <Amount>
-              R$
+              {amount ? <p>R$ </p> : ""}
+
               <strong>{amount}</strong>
             </Amount>
           </ContentFooter>

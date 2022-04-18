@@ -9,6 +9,8 @@ import {
   SectionAdvantage,
   TitleSectionAdvantage,
   ContentSectionAdvantage,
+  SideLeft,
+  InfoDate,
 } from "./styles";
 
 import "swiper/css";
@@ -23,6 +25,7 @@ import IconInformation from "../../components/IconInformation";
 
 import Cars from "../../repositories/cars";
 import AppBar from "../../components/AppBar";
+import BasicDateRangePicker from "../../components/BasicDateRangerPicker";
 
 const pageServices: React.FC = () => {
   function getRandomNumber() {
@@ -54,13 +57,19 @@ const pageServices: React.FC = () => {
       <AppBar />
       <Container>
         <PageHeader>
-          <Title>
-            Alugue Seu <br />
-            Veículo
-          </Title>
+          <SideLeft>
+            <Title>
+              Alugue Seu <br />
+              Veículo
+            </Title>
+
+            <InfoDate>
+              <BasicDateRangePicker />
+            </InfoDate>
+          </SideLeft>
           <Img>
             <Gradient></Gradient>
-            <img src="\src\utils\images\veicleHomePage.png" alt="" />
+            <img src="\src\assets\images\veicleHomePage.png" alt="" />
           </Img>
         </PageHeader>
         <Swiper
@@ -88,6 +97,7 @@ const pageServices: React.FC = () => {
                   img={car.img}
                   amount={car.amount}
                   autoMaker={car.automaker}
+                  seats={car.seats}
                 />
               </SwiperSlide>
             );
@@ -100,19 +110,19 @@ const pageServices: React.FC = () => {
             <IconInformation
               Title="+50 CARROS"
               Description="Mais de 50 carros com categorias diferentes"
-              SrcImg="\src\utils\images\carro-eletrico.png"
+              SrcImg="\src\assets\images\carro-eletrico.png"
             />
 
             <IconInformation
               Title="PREÇOS BAIXOS"
               Description="Promoções imperdíveis"
-              SrcImg="\src\utils\images\low-price.png"
+              SrcImg="\src\assets\images\low-price.png"
             />
 
             <IconInformation
               Title="SUPORTE 24 HORAS"
               Description="Suporte disponível 24 horas, para dúvidas."
-              SrcImg="\src\utils\images\customer-service.png"
+              SrcImg="\src\assets\images\customer-service.png"
             />
           </ContentSectionAdvantage>
         </SectionAdvantage>

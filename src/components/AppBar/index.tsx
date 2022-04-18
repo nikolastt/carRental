@@ -20,10 +20,10 @@ const AppBar: React.FC = () => {
             <Link to="/booking">Booking</Link>
           </li>
           <li>
-            <a href="/">About Us</a>
+            <Link to="/myfavorites">Meus Favoritos</Link>
           </li>
           <li>
-            <a href="/">Support</a>
+            <Link to="/addVeicle">Adcicionar veículo</Link>
           </li>
         </Ul>
       </Navigation>
