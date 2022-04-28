@@ -9,16 +9,20 @@ import {
   FormControls,
 } from "./styles";
 
-import { useTheme } from "styled-components";
 import Cards from "../../components/Cards/intex";
 import AppBar from "../../components/AppBar";
 
 import { db } from "../../firebase/index";
 import { collection, addDoc } from "firebase/firestore";
 
+import cars from "../../repositories/cars";
+
 import TextField from "@mui/material/TextField";
 import {
+  Alert,
+  Box,
   Button,
+  CircularProgress,
   FormControl,
   FormHelperText,
   InputLabel,
@@ -26,6 +30,7 @@ import {
   Select,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 const AddVeicle: React.FC = () => {
   const [model, setModel] = useState("");
@@ -45,43 +50,97 @@ const AddVeicle: React.FC = () => {
   const [gear, setGear] = useState("");
   const [gearError, setGearError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [isInvalid, setIsInvalid] = useState(false);
-  const [isSuccessInputInDataBase, setIsSuccessInputInDataBase] =
-    useState(false);
-  const [error, setError] = useState(false);
+  const [errorInputInDataBase, setErrorInputInDataBase] = useState(false);
+  const [successInputInDataBase, setSuccessInputInDataBase] = useState(false);
+  const [errorCarDuplicate, setErrorCarDuplicate] = useState(false);
 
-  const theme = useTheme();
+  const verificar = () => {
+    console.log("Verificar");
+    let isInvalid = false;
 
-  function verificar() {
     if (model === "") {
       setModelError(true);
+      setLoading(false);
+      isInvalid = true;
     }
     if (autoMaker === "") {
       setAutoMakerError(true);
+      setLoading(false);
+      isInvalid = true;
     }
     if (amount === "") {
       setAmountError(true);
+      setLoading(false);
+      isInvalid = true;
     }
     if (typeFuel === "") {
       setTypeFuelError(true);
+      setLoading(false);
+      isInvalid = true;
     }
     if (category === "") {
       setCategoryError(true);
+      setLoading(false);
+      isInvalid = true;
     }
     if (img === "") {
       setImgError(true);
+      setLoading(false);
+      isInvalid = true;
     }
     if (seats === "") {
       setSeatsError(true);
+      setLoading(false);
+      isInvalid = true;
     }
     if (gear === "") {
       setGearError(true);
+      setLoading(false);
+      isInvalid = true;
     }
+
+    return isInvalid;
+  };
+
+  async function addVeicle() {
+    await addDoc(collection(db, "cars"), {
+      model,
+      autoMaker,
+      amount,
+      typeFuel,
+      category,
+      img,
+      seats,
+      gear,
+    })
+      .then(() => {
+        setLoading(false);
+        setSuccessInputInDataBase(true);
+      })
+      .catch(() => setErrorInputInDataBase(true));
+  }
+
+  function verificarDatabase() {
+    let duplicate = false;
+    cars.map((car) => {
+      if (car.model.toLocaleLowerCase() === model.toLocaleLowerCase()) {
+        setErrorCarDuplicate(true);
+        setLoading(false);
+        duplicate = true;
+      }
+    });
+
+    return duplicate;
   }
 
   function handleInputVeicle() {
     console.log("Renderizou");
-    verificar();
+    setLoading(true);
+    const isInvalid = verificar();
+    const duplicate = verificarDatabase();
+    if (!isInvalid && !duplicate) {
+      addVeicle();
+    }
   }
 
   return (
@@ -161,7 +220,7 @@ const AddVeicle: React.FC = () => {
                 }}
                 value={model}
                 error={modelError}
-                helperText="Campo em branco"
+                helperText={modelError && "Campo em branco"}
               />
 
               <TextField
@@ -176,7 +235,7 @@ const AddVeicle: React.FC = () => {
                 }}
                 value={autoMaker}
                 error={autoMakerError}
-                helperText="Campo em branco"
+                helperText={autoMakerError && "Campo em branco"}
               />
 
               <TextField
@@ -192,7 +251,7 @@ const AddVeicle: React.FC = () => {
                 }}
                 value={amount}
                 error={amountError}
-                helperText="Campo em branco"
+                helperText={amountError && "Campo em branco"}
               />
 
               <TextField
@@ -207,7 +266,7 @@ const AddVeicle: React.FC = () => {
                 }}
                 value={typeFuel}
                 error={typeFuelError}
-                helperText="Campo em branco"
+                helperText={typeFuelError && "Campo em branco"}
               />
 
               <TextField
@@ -222,7 +281,7 @@ const AddVeicle: React.FC = () => {
                 }}
                 value={img}
                 error={imgError}
-                helperText="Campo em branco"
+                helperText={imgError && "Campo em branco"}
               />
 
               <TextField
@@ -238,7 +297,7 @@ const AddVeicle: React.FC = () => {
                 }}
                 value={seats}
                 error={seatsError}
-                helperText="Campo em branco"
+                helperText={seatsError && "Campo em branco"}
               />
             </Inputs>
 
@@ -255,15 +314,58 @@ const AddVeicle: React.FC = () => {
           </ContentHeader>
 
           <ContentFooter>
-            <Button
-              variant="outlined"
-              sx={{ width: "25%" }}
-              size="medium"
-              endIcon={<AddIcon />}
-              onClick={handleInputVeicle}
-            >
-              Adicionar
-            </Button>
+            <Box sx={{ marginBottom: "1rem", width: "25%" }}>
+              <LoadingButton
+                loading={loading}
+                variant="outlined"
+                onClick={handleInputVeicle}
+                sx={{ width: "100%" }}
+                loadingIndicator={
+                  <CircularProgress color="primary" size={16} />
+                }
+              >
+                Adicionar
+              </LoadingButton>
+            </Box>
+
+            {errorInputInDataBase && (
+              <Box>
+                <Alert
+                  severity="error"
+                  onClose={() => {
+                    setErrorInputInDataBase(false);
+                  }}
+                >
+                  Erro ao cadastrar o veiculo - Tente novamente!
+                </Alert>
+              </Box>
+            )}
+
+            {errorCarDuplicate && (
+              <Box>
+                <Alert
+                  severity="error"
+                  onClose={() => {
+                    setErrorCarDuplicate(false);
+                  }}
+                >
+                  Erro - Veículo já foi cadastrado!
+                </Alert>
+              </Box>
+            )}
+
+            {successInputInDataBase && (
+              <Box>
+                <Alert
+                  severity="success"
+                  onClose={() => {
+                    setSuccessInputInDataBase(false);
+                  }}
+                >
+                  Veículo cadastrado com sucesso!
+                </Alert>
+              </Box>
+            )}
           </ContentFooter>
         </Content>
       </Container>

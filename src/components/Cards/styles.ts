@@ -85,7 +85,7 @@ export const Amount = styled.div`
     margin-left: auto;
     font-size: 1rem;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: flex-end;
     color: ${props => props.theme.colors.white};
     
