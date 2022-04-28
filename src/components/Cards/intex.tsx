@@ -13,6 +13,8 @@ import {
   IconHeaderFavoriteContainer,
   Amount,
   SideLeftContentFooter,
+  Gears,
+  Seats,
 } from "./styles";
 
 interface ICardProps {
@@ -22,7 +24,8 @@ interface ICardProps {
   autoMaker: string;
   width?: string;
   isTypeFavorite?: boolean;
-  seats: number | null;
+  seats: string;
+  gear: string;
 }
 
 const Cards: React.FC<ICardProps> = ({
@@ -33,6 +36,7 @@ const Cards: React.FC<ICardProps> = ({
   width,
   isTypeFavorite,
   seats,
+  gear,
 }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const theme = useTheme();
@@ -63,16 +67,34 @@ const Cards: React.FC<ICardProps> = ({
         <Card.Footer className="cardFooter">
           <ContentFooter>
             <SideLeftContentFooter>
-              <FaUser size={18} color={theme.colors.white} />
-              <p>{}</p>
-              <GiGearStickPattern size={18} color={theme.colors.white} />
+              {seats ? (
+                <Seats>
+                  <FaUser size={18} color={theme.colors.white} />
+                  <p>{seats}</p>
+                </Seats>
+              ) : (
+                ""
+              )}
+
+              {gear ? (
+                <Gears>
+                  <GiGearStickPattern size={18} color={theme.colors.white} />
+                  <strong>{gear == "automatico" ? "A" : "M"}</strong>
+                </Gears>
+              ) : (
+                ""
+              )}
             </SideLeftContentFooter>
 
-            <Amount>
-              {amount ? <p>R$ </p> : ""}
+            {amount ? (
+              <Amount>
+                <p>R$ </p>
 
-              <strong>{amount}</strong>
-            </Amount>
+                <strong>{amount}</strong>
+              </Amount>
+            ) : (
+              ""
+            )}
           </ContentFooter>
         </Card.Footer>
       </Card>

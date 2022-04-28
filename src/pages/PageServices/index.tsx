@@ -18,14 +18,13 @@ import "swiper/css/effect-cube";
 import "swiper/css/pagination";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { EffectCoverflow, Navigation, Pagination } from "swiper";
+import { EffectCoverflow, Navigation, Pagination, Autoplay } from "swiper";
 
 import Cards from "../../components/Cards/intex";
 import IconInformation from "../../components/IconInformation";
 
 import Cars from "../../repositories/cars";
 import AppBar from "../../components/AppBar";
-import BasicDateRangePicker from "../../components/BasicDateRangerPicker";
 
 const pageServices: React.FC = () => {
   function getRandomNumber() {
@@ -64,7 +63,7 @@ const pageServices: React.FC = () => {
             </Title>
 
             <InfoDate>
-              <BasicDateRangePicker />
+              <h1>Datas para alugar o carro</h1>
             </InfoDate>
           </SideLeft>
           <Img>
@@ -86,7 +85,11 @@ const pageServices: React.FC = () => {
           }}
           pagination={true}
           navigation={true}
-          modules={[EffectCoverflow, Pagination, Navigation]}
+          autoplay={{
+            delay: 2500,
+            disableOnInteraction: true,
+          }}
+          modules={[EffectCoverflow, Pagination, Navigation, Autoplay]}
           className="mySwiper"
         >
           {carsInPromotion?.map((car, index) => {
@@ -97,6 +100,7 @@ const pageServices: React.FC = () => {
                   img={car.img}
                   amount={car.amount}
                   autoMaker={car.automaker}
+                  gear={car.gear}
                   seats={car.seats}
                 />
               </SwiperSlide>

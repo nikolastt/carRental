@@ -71,27 +71,49 @@ export const IconHeaderFavoriteContainer = styled.div`
     cursor: pointer;    
 `;
 
-export const Amount = styled.p`
+
+
+export const SideLeftContentFooter = styled.div`
+    width: 60%;
+    display: flex;
+    
+
+`
+
+export const Amount = styled.div`
     width: 40%;
     margin-left: auto;
     font-size: 1rem;
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     color: ${props => props.theme.colors.white};
     
 
     & strong{
-        margin-left: 0.2rem;
+        margin-left: 0.5rem;
     }
 `
 
-export const SideLeftContentFooter = styled.div`
-    width: 60%;
+export const Seats = styled.div ` 
+    width: 30%;
     display: flex;
-    justify-content: space-between;
+    margin-right: 1rem;
 
+    & p{
+        margin-left: 0.5rem;
+    }
+    
 `
+export const Gears = styled.div ` 
+    width: 30%;
+    display: flex;
 
+    & strong{
+        margin-left: 0.5rem;
+    }
+    
+`
 
 
 

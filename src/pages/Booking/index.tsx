@@ -10,9 +10,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import AppBar from "../../components/AppBar";
 
-import { db } from "../../firebase/index";
-import { collection, addDoc } from "firebase/firestore";
-
 const Booking: React.FC = () => {
   const [carsInScreen, setCarsInScreen] = useState(cars);
   const number = useSelector((state: RootState) => state.filterByCategory);
@@ -30,15 +27,6 @@ const Booking: React.FC = () => {
     }
   }, [number]);
 
-  async function addCar() {
-    const docRef = await addDoc(collection(db, "cars"), {
-      name: "Ford-KA",
-      country: "Brazil",
-    });
-
-    console.log(docRef.id);
-  }
-
   return (
     <>
       <AppBar />
@@ -55,11 +43,11 @@ const Booking: React.FC = () => {
                 amount={item.amount}
                 autoMaker={item.automaker}
                 seats={item.seats}
+                gear={item.gear}
                 width="33.3%"
               />
             );
           })}
-          <button onClick={() => addCar()}>Add car</button>
         </Content>
       </Container>
     </>
