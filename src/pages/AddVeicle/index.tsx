@@ -103,6 +103,7 @@ const AddVeicle: React.FC = () => {
   };
 
   async function addVeicle() {
+    console.log("Entrou no add Veicle");
     await addDoc(collection(db, "cars"), {
       model,
       autoMaker,
@@ -114,10 +115,23 @@ const AddVeicle: React.FC = () => {
       gear,
     })
       .then(() => {
+        console.log("Entrou no then");
         setLoading(false);
         setSuccessInputInDataBase(true);
+        setModel("");
+        setAutoMaker("");
+        setAmount("");
+        setTypeFuel("");
+        setCategory("");
+        setImg("");
+        setSeats("");
+        setGear("");
       })
-      .catch(() => setErrorInputInDataBase(true));
+      .catch(() => {
+        console.log("Entrou no catch");
+        setErrorInputInDataBase(true);
+        setLoading(false);
+      });
   }
 
   function verificarDatabase() {
@@ -134,7 +148,9 @@ const AddVeicle: React.FC = () => {
   }
 
   function handleInputVeicle() {
-    console.log("Renderizou");
+    setSuccessInputInDataBase(false);
+    setErrorInputInDataBase(false);
+    setErrorCarDuplicate(false);
     setLoading(true);
     const isInvalid = verificar();
     const duplicate = verificarDatabase();

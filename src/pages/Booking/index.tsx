@@ -6,13 +6,19 @@ import { Container, Content } from "./styles";
 import cars from "../../repositories/cars";
 import SideLeft from "../../components/SideLeft";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import AppBar from "../../components/AppBar";
+
+import { getCars } from "../../redux/carsSlice";
 
 const Booking: React.FC = () => {
   const [carsInScreen, setCarsInScreen] = useState(cars);
   const number = useSelector((state: RootState) => state.filterByCategory);
+
+  const carsReducer = useSelector((state: RootState) => state.carsSlice);
+
+  const dispatch = useDispatch();
 
   function handleCarsInScreen() {
     const newCars = cars.filter((item) =>
@@ -34,6 +40,8 @@ const Booking: React.FC = () => {
         <SideLeft />
 
         <Content>
+          <button onClick={() => dispatch(getCars(5))}>Add number</button>
+          <h1>Number: {carsReducer.length}</h1>
           {carsInScreen.map((item, index) => {
             return (
               <Cards

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import {
   Container,
@@ -23,33 +23,59 @@ import { EffectCoverflow, Navigation, Pagination, Autoplay } from "swiper";
 import Cards from "../../components/Cards/intex";
 import IconInformation from "../../components/IconInformation";
 
-import Cars from "../../repositories/cars";
+// import Cars from "../../repositories/cars";
 import AppBar from "../../components/AppBar";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebase";
+
+import { useSelector, useDispatch } from "react-redux";
+import { getCars, ICarProps } from "../../redux/carsSlice";
+import { RootState } from "../../redux/store";
 
 const pageServices: React.FC = () => {
+  const dispatch = useDispatch();
+
+  const [cars, setCars] = useState<ICarProps[]>([]);
+
+  useEffect(() => {
+    let cars: any = [];
+    async function getCarsDb() {
+      const querySnapshot = await getDocs(collection(db, "cars"));
+      querySnapshot.forEach((doc) => {
+        cars.push(doc.data());
+      });
+      dispatch(getCars(cars));
+      setCars(cars);
+    }
+
+    getCarsDb();
+  }, []);
+
   function getRandomNumber() {
-    const number = Math.floor(Math.random() * (Cars.length - 0) + 0);
+    const number = Math.floor(Math.random() * (cars.length - 0) + 0);
     return number;
   }
 
   const carsInPromotion = useMemo(() => {
-    const numbers: number[] = [];
+    let numbers: number[] = [];
 
     for (let i = 0; i < 4; i++) {
       const numberRandom = getRandomNumber();
+      console.log(numberRandom);
+
       if (numbers.includes(numberRandom)) {
-        i--;
-        return;
+        numbers.push(numberRandom);
       } else {
         numbers.push(numberRandom);
       }
     }
 
-    const carsInPromotion = numbers.map((number) => Cars[number]);
-    console.log(carsInPromotion);
+    const carsInPromotion = numbers.map((number) => cars[number]);
 
     return carsInPromotion;
-  }, []);
+  }, [cars]);
+
+  console.log(carsInPromotion, "cars in promotion");
 
   return (
     <>
@@ -92,7 +118,7 @@ const pageServices: React.FC = () => {
           modules={[EffectCoverflow, Pagination, Navigation, Autoplay]}
           className="mySwiper"
         >
-          {carsInPromotion?.map((car, index) => {
+          {cars?.map((car, index) => {
             return (
               <SwiperSlide key={car.model + index}>
                 <Cards

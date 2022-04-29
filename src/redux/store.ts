@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import  filterByCategory  from './filterByCategory'
+import  filterByCategory  from './filterByCategorySlice'
+import  carsSlice  from './carsSlice'
 
 export const store = configureStore({
   reducer: {
       filterByCategory,
+      carsSlice,
   },
 })
 

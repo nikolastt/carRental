@@ -5,7 +5,7 @@ import { FcCollapse } from "react-icons/fc";
 
 import cars from "../../repositories/cars";
 import { useDispatch } from "react-redux";
-import { addCategory, removeCategory } from "../../redux/filterByCategory";
+import { addCategory, removeCategory } from "../../redux/filterByCategorySlice";
 
 const FilterByCategoryCollapse: React.FC = () => {
   const [isCollapseUp, setIsCollapseUp] = useState(true);
