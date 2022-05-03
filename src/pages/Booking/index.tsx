@@ -34,7 +34,6 @@ const Booking: React.FC = () => {
     if (carsRedux.length > 0) {
       setCars(carsRedux);
     } else {
-      console.log("Pegou banco");
       getCarsDb();
     }
   }, []);

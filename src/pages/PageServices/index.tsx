@@ -53,10 +53,36 @@ const pageServices: React.FC = () => {
     if (carsRedux.length > 0) {
       setCars(carsRedux);
     } else {
-      console.log("Pegou banco");
       getCarsDb();
     }
   }, []);
+
+  const getUniqueNumbers = useMemo(() => {
+    const numbers: number[] = [];
+
+    if (cars.length > 0) {
+      for (let i = 0; i < 4; i++) {
+        var temp = Math.floor(Math.random() * (cars?.length || 5));
+        if (numbers.includes(temp)) {
+          i--;
+        } else {
+          numbers.push(temp);
+        }
+      }
+    }
+
+    return numbers;
+  }, [cars]);
+
+  const getCarsPromotion = useMemo(() => {
+    const carsPromotion: ICarProps[] = [];
+
+    getUniqueNumbers.forEach((number) => {
+      carsPromotion.push(cars[number]);
+    });
+
+    return carsPromotion;
+  }, [cars]);
 
   return (
     <>
@@ -100,7 +126,7 @@ const pageServices: React.FC = () => {
           modules={[EffectCoverflow, Pagination, Navigation, Autoplay]}
           className="mySwiper"
         >
-          {cars?.map((car, index) => {
+          {getCarsPromotion?.map((car, index) => {
             return (
               <SwiperSlide key={car.model + index}>
                 <Cards
