@@ -3,35 +3,53 @@ import Cards from "../../components/Cards/intex";
 
 import { Container, Content } from "./styles";
 
-import cars from "../../repositories/cars";
 import SideLeft from "../../components/SideLeft";
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import AppBar from "../../components/AppBar";
 
-import { getCars } from "../../redux/carsSlice";
+import { getCars, ICarProps } from "../../redux/carsSlice";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebase";
 
 const Booking: React.FC = () => {
-  const [carsInScreen, setCarsInScreen] = useState(cars);
-  const number = useSelector((state: RootState) => state.filterByCategory);
-
-  const carsReducer = useSelector((state: RootState) => state.carsSlice);
-
+  const [carsInScreen, setCarsInScreen] = useState<ICarProps[]>([]);
+  const [cars, setCars] = useState<ICarProps[]>([]);
+  const filter = useSelector((state: RootState) => state.filterByCategory);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    async function getCarsDb() {
+      const arrayCars: any = [];
+      const querySnapshot = await getDocs(collection(db, "cars"));
+      querySnapshot.forEach((doc) => {
+        arrayCars.push(doc.data());
+      });
+      setCars(arrayCars);
+      dispatch(getCars(arrayCars));
+    }
+
+    getCarsDb();
+  }, []);
+
   function handleCarsInScreen() {
-    const newCars = cars.filter((item) =>
-      number.includes(item.category.toLowerCase())
-    );
+    console.log(filter, "Filter");
+    const newCars = cars.filter((item) => {
+      return (
+        filter.includes(item.category.toLowerCase()) ||
+        filter.includes(item.seats)
+      );
+    });
+
     setCarsInScreen(newCars);
   }
 
   useEffect(() => {
     {
-      number.length > 0 ? handleCarsInScreen() : setCarsInScreen(cars);
+      filter.length > 0 ? handleCarsInScreen() : setCarsInScreen(cars);
     }
-  }, [number]);
+  }, [filter, cars]);
 
   return (
     <>
@@ -39,24 +57,28 @@ const Booking: React.FC = () => {
       <Container>
         <SideLeft />
 
-        <Content>
-          <button onClick={() => dispatch(getCars(5))}>Add number</button>
-          <h1>Number: {carsReducer.length}</h1>
-          {carsInScreen.map((item, index) => {
-            return (
-              <Cards
-                key={item.model}
-                title={item.model}
-                img={item.img}
-                amount={item.amount}
-                autoMaker={item.automaker}
-                seats={item.seats}
-                gear={item.gear}
-                width="33.3%"
-              />
-            );
-          })}
-        </Content>
+        {carsInScreen.length > 0 ? (
+          <Content>
+            {carsInScreen.map((item, index) => {
+              return (
+                <Cards
+                  key={item.model}
+                  title={item.model}
+                  img={item.img}
+                  amount={item.amount}
+                  autoMaker={item.autoMaker}
+                  seats={item.seats}
+                  gear={item.gear}
+                  width="33.3%"
+                />
+              );
+            })}
+          </Content>
+        ) : (
+          <Content>
+            <h1>Carregando</h1>
+          </Content>
+        )}
       </Container>
     </>
   );

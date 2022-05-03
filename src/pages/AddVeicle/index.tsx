@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import {
   Container,
@@ -7,21 +7,21 @@ import {
   ContentHeader,
   ContentFooter,
   FormControls,
+  BoxCard,
+  BoxButton,
+  TextFields,
 } from "./styles";
 
 import Cards from "../../components/Cards/intex";
 import AppBar from "../../components/AppBar";
 
 import { db } from "../../firebase/index";
-import { collection, addDoc } from "firebase/firestore";
-
-import cars from "../../repositories/cars";
+import { collection, addDoc, getDocs } from "firebase/firestore";
 
 import TextField from "@mui/material/TextField";
 import {
   Alert,
   Box,
-  Button,
   CircularProgress,
   FormControl,
   FormHelperText,
@@ -29,8 +29,19 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+
 import LoadingButton from "@mui/lab/LoadingButton";
+
+interface ICarProps {
+  model: string;
+  autoMaker: string;
+  amount: string;
+  typeFuel: string;
+  category: string;
+  img: string;
+  seats: string;
+  gear: string;
+}
 
 const AddVeicle: React.FC = () => {
   const [model, setModel] = useState("");
@@ -53,9 +64,22 @@ const AddVeicle: React.FC = () => {
   const [errorInputInDataBase, setErrorInputInDataBase] = useState(false);
   const [successInputInDataBase, setSuccessInputInDataBase] = useState(false);
   const [errorCarDuplicate, setErrorCarDuplicate] = useState(false);
+  const [cars, setCars] = useState<ICarProps[]>([]);
+
+  useEffect(() => {
+    async function getCarsDb() {
+      const arrayCars: any = [];
+      const querySnapshot = await getDocs(collection(db, "cars"));
+      querySnapshot.forEach((doc) => {
+        arrayCars.push(doc.data());
+      });
+      setCars(arrayCars);
+    }
+
+    getCarsDb();
+  }, []);
 
   const verificar = () => {
-    console.log("Verificar");
     let isInvalid = false;
 
     if (model === "") {
@@ -103,7 +127,6 @@ const AddVeicle: React.FC = () => {
   };
 
   async function addVeicle() {
-    console.log("Entrou no add Veicle");
     await addDoc(collection(db, "cars"), {
       model,
       autoMaker,
@@ -114,8 +137,19 @@ const AddVeicle: React.FC = () => {
       seats,
       gear,
     })
-      .then(() => {
-        console.log("Entrou no then");
+      .then((doc) => {
+        let data = {
+          model,
+          autoMaker,
+          amount,
+          typeFuel,
+          category,
+          img,
+          seats,
+          gear,
+        };
+
+        setCars([...cars, data]);
         setLoading(false);
         setSuccessInputInDataBase(true);
         setModel("");
@@ -170,7 +204,7 @@ const AddVeicle: React.FC = () => {
             <Inputs>
               <FormControls>
                 <FormControl
-                  sx={{ width: "40%" }}
+                  sx={{ width: "45%", m: 1 }}
                   size="small"
                   error={categoryError}
                 >
@@ -198,7 +232,7 @@ const AddVeicle: React.FC = () => {
                   )}
                 </FormControl>
                 <FormControl
-                  sx={{ width: "40%" }}
+                  sx={{ width: "45%", m: 1 }}
                   size="small"
                   error={gearError}
                 >
@@ -224,126 +258,112 @@ const AddVeicle: React.FC = () => {
                 </FormControl>
               </FormControls>
 
-              <TextField
-                id="filled-basic"
-                sx={{ width: "40%" }}
-                label="Modelo"
-                variant="standard"
-                size="small"
-                onChange={(e) => {
-                  setModelError(false);
-                  setModel(e.target.value);
-                }}
-                value={model}
-                error={modelError}
-                helperText={modelError && "Campo em branco"}
-              />
+              <TextFields>
+                <TextField
+                  label="Modelo"
+                  variant="standard"
+                  size="small"
+                  onChange={(e) => {
+                    setModelError(false);
+                    setModel(e.target.value);
+                  }}
+                  value={model}
+                  error={modelError}
+                  helperText={modelError && "Campo em branco"}
+                />
 
-              <TextField
-                id="filled-basic"
-                label="Marca | Montadora"
-                variant="standard"
-                sx={{ width: "40%" }}
-                size="small"
-                onChange={(e) => {
-                  setAutoMakerError(false);
-                  setAutoMaker(e.target.value);
-                }}
-                value={autoMaker}
-                error={autoMakerError}
-                helperText={autoMakerError && "Campo em branco"}
-              />
+                <TextField
+                  id="filled-basic"
+                  label="Marca | Montadora"
+                  variant="standard"
+                  size="small"
+                  onChange={(e) => {
+                    setAutoMakerError(false);
+                    setAutoMaker(e.target.value);
+                  }}
+                  value={autoMaker}
+                  error={autoMakerError}
+                  helperText={autoMakerError && "Campo em branco"}
+                />
 
-              <TextField
-                id="filled-basic"
-                label="Valor p/mês"
-                type="number"
-                variant="standard"
-                sx={{ width: "40%" }}
-                size="small"
-                onChange={(e) => {
-                  setAmountError(false);
-                  setAmount(e.target.value);
-                }}
-                value={amount}
-                error={amountError}
-                helperText={amountError && "Campo em branco"}
-              />
+                <TextField
+                  id="filled-basic"
+                  label="Valor p/mês"
+                  type="number"
+                  variant="standard"
+                  size="small"
+                  onChange={(e) => {
+                    setAmountError(false);
+                    setAmount(e.target.value);
+                  }}
+                  value={amount}
+                  error={amountError}
+                  helperText={amountError && "Campo em branco"}
+                />
 
-              <TextField
-                id="filled-basic"
-                label="Tipo de combustível"
-                variant="standard"
-                sx={{ width: "40%" }}
-                size="small"
-                onChange={(e) => {
-                  setTypeFuelError(false);
-                  setTypeFuel(e.target.value);
-                }}
-                value={typeFuel}
-                error={typeFuelError}
-                helperText={typeFuelError && "Campo em branco"}
-              />
+                <TextField
+                  id="filled-basic"
+                  label="Tipo de combustível"
+                  variant="standard"
+                  size="small"
+                  onChange={(e) => {
+                    setTypeFuelError(false);
+                    setTypeFuel(e.target.value);
+                  }}
+                  value={typeFuel}
+                  error={typeFuelError}
+                  helperText={typeFuelError && "Campo em branco"}
+                />
 
-              <TextField
-                id="filled-basic"
-                label="Url da imagem"
-                variant="standard"
-                sx={{ width: "40%" }}
-                size="small"
-                onChange={(e) => {
-                  setImgError(false);
-                  setImg(e.target.value);
-                }}
-                value={img}
-                error={imgError}
-                helperText={imgError && "Campo em branco"}
-              />
+                <TextField
+                  id="filled-basic"
+                  label="Url da imagem"
+                  variant="standard"
+                  size="small"
+                  onChange={(e) => {
+                    setImgError(false);
+                    setImg(e.target.value);
+                  }}
+                  value={img}
+                  error={imgError}
+                  helperText={imgError && "Campo em branco"}
+                />
 
-              <TextField
-                id="filled-basic"
-                label="Assentos"
-                type="number"
-                variant="standard"
-                sx={{ width: "40%" }}
-                size="small"
-                onChange={(e) => {
-                  setSeatsError(false);
-                  setSeats(e.target.value);
-                }}
-                value={seats}
-                error={seatsError}
-                helperText={seatsError && "Campo em branco"}
-              />
+                <TextField
+                  id="filled-basic"
+                  label="Assentos"
+                  type="number"
+                  variant="standard"
+                  size="small"
+                  onChange={(e) => {
+                    setSeatsError(false);
+                    setSeats(e.target.value);
+                  }}
+                  value={seats}
+                  error={seatsError}
+                  helperText={seatsError && "Campo em branco"}
+                />
+              </TextFields>
             </Inputs>
 
-            <Cards
-              width="300px"
-              title={model}
-              autoMaker={autoMaker}
-              img={img || "/src/assets/images/car3svg.svg"}
-              amount={amount}
-              isTypeFavorite={false}
-              seats={seats}
-              gear={gear}
-            />
+            <BoxCard>
+              <Cards
+                width="100%"
+                title={model}
+                autoMaker={autoMaker}
+                img={
+                  img ||
+                  "https://media.discordapp.net/attachments/730409029217681421/969777144827904030/unknown.png?width=1352&height=676"
+                }
+                amount={amount}
+                isTypeFavorite={false}
+                seats={seats}
+                gear={gear}
+              />
+            </BoxCard>
           </ContentHeader>
 
           <ContentFooter>
-            <Box sx={{ marginBottom: "1rem", width: "25%" }}>
-              <LoadingButton
-                loading={loading}
-                variant="outlined"
-                onClick={handleInputVeicle}
-                sx={{ width: "100%" }}
-                loadingIndicator={
-                  <CircularProgress color="primary" size={16} />
-                }
-              >
-                Adicionar
-              </LoadingButton>
-            </Box>
-
             {errorInputInDataBase && (
               <Box>
                 <Alert
@@ -382,6 +402,20 @@ const AddVeicle: React.FC = () => {
                 </Alert>
               </Box>
             )}
+
+            <BoxButton>
+              <LoadingButton
+                loading={loading}
+                variant="outlined"
+                onClick={handleInputVeicle}
+                sx={{ width: "100%" }}
+                loadingIndicator={
+                  <CircularProgress color="primary" size={16} />
+                }
+              >
+                Adicionar
+              </LoadingButton>
+            </BoxButton>
           </ContentFooter>
         </Content>
       </Container>

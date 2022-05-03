@@ -1,15 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { useEffect, useMemo, useState } from 'react';
-
-import { collection, getDocs } from "firebase/firestore";
-
-import {db} from '../firebase/index'
-
-
 
 export interface ICarProps{
     model: string;
-    automaker: string;
+    autoMaker: string;
     amount: string;
     typeFuel: string;
     category: string;
@@ -18,19 +11,19 @@ export interface ICarProps{
     gear: string;
 }
 
-
-const initialState: ICarProps[] = [];
+const initialState = {
+    cars : <ICarProps[]> []
+};
 
 export const carsSlice = createSlice({
     name: 'carsSlice',
     initialState,
     reducers: {
         getCars: (state, action) => {
-            return [state = action.payload]
+            return void{...state.cars = action.payload}
         }
     }
 })
 
-export const { getCars } = carsSlice.actions
-
-export default carsSlice.reducer
+export const { getCars } = carsSlice.actions;
+export default carsSlice.reducer;

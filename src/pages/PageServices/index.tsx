@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 import {
   Container,
@@ -36,46 +36,21 @@ const pageServices: React.FC = () => {
   const dispatch = useDispatch();
 
   const [cars, setCars] = useState<ICarProps[]>([]);
+  const [carsInPromotion, setCarsInPromotion] = useState<ICarProps[]>([]);
 
   useEffect(() => {
-    let cars: any = [];
     async function getCarsDb() {
+      const arrayCars: any = [];
       const querySnapshot = await getDocs(collection(db, "cars"));
       querySnapshot.forEach((doc) => {
-        cars.push(doc.data());
+        arrayCars.push(doc.data());
       });
-      dispatch(getCars(cars));
-      setCars(cars);
+      setCars(arrayCars);
+      dispatch(getCars(arrayCars));
     }
 
     getCarsDb();
   }, []);
-
-  function getRandomNumber() {
-    const number = Math.floor(Math.random() * (cars.length - 0) + 0);
-    return number;
-  }
-
-  const carsInPromotion = useMemo(() => {
-    let numbers: number[] = [];
-
-    for (let i = 0; i < 4; i++) {
-      const numberRandom = getRandomNumber();
-      console.log(numberRandom);
-
-      if (numbers.includes(numberRandom)) {
-        numbers.push(numberRandom);
-      } else {
-        numbers.push(numberRandom);
-      }
-    }
-
-    const carsInPromotion = numbers.map((number) => cars[number]);
-
-    return carsInPromotion;
-  }, [cars]);
-
-  console.log(carsInPromotion, "cars in promotion");
 
   return (
     <>
@@ -89,7 +64,7 @@ const pageServices: React.FC = () => {
             </Title>
 
             <InfoDate>
-              <h1>Datas para alugar o carro</h1>
+              <h1>Datas para alugar o carro </h1>
             </InfoDate>
           </SideLeft>
           <Img>
@@ -97,6 +72,7 @@ const pageServices: React.FC = () => {
             <img src="\src\assets\images\veicleHomePage.png" alt="" />
           </Img>
         </PageHeader>
+
         <Swiper
           effect={"coverflow"}
           grabCursor={true}
@@ -125,7 +101,7 @@ const pageServices: React.FC = () => {
                   title={car.model}
                   img={car.img}
                   amount={car.amount}
-                  autoMaker={car.automaker}
+                  autoMaker={car.autoMaker}
                   gear={car.gear}
                   seats={car.seats}
                 />

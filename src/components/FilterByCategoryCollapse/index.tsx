@@ -3,12 +3,15 @@ import React, { useMemo, useState } from "react";
 import { Container, Icon, Title, Header, Content, Input } from "./styles";
 import { FcCollapse } from "react-icons/fc";
 
-import cars from "../../repositories/cars";
-import { useDispatch } from "react-redux";
+import { RootState } from "../../redux/store";
+
+// import cars from "../../repositories/cars";
+import { useDispatch, useSelector } from "react-redux";
 import { addCategory, removeCategory } from "../../redux/filterByCategorySlice";
 
 const FilterByCategoryCollapse: React.FC = () => {
   const [isCollapseUp, setIsCollapseUp] = useState(true);
+  const cars = useSelector((state: RootState) => state.carsSlice.cars);
   const dispatch = useDispatch();
 
   const categoryes = useMemo(() => {
@@ -23,7 +26,7 @@ const FilterByCategoryCollapse: React.FC = () => {
       }
     });
     return uniqueCategoryes;
-  }, []);
+  }, [cars]);
 
   const numberOfCarsByCategory = useMemo(() => {
     let countSUV = 0;
@@ -34,13 +37,13 @@ const FilterByCategoryCollapse: React.FC = () => {
     cars.map((car) => {
       if (car.category === "SUV") {
         countSUV++;
-      } else if (car.category === "compacto") {
+      } else if (car.category.toLowerCase() === "compacto") {
         countCompacto++;
-      } else if (car.category === "sedan") {
+      } else if (car.category.toLowerCase() === "sedan") {
         countSedan++;
-      } else if (car.category === "utilitario") {
+      } else if (car.category.toLowerCase() === "utilitario") {
         countUtilitario++;
-      } else if (car.category === "picape") {
+      } else if (car.category.toLowerCase() === "picape") {
         countPicape++;
       }
     });
@@ -67,7 +70,7 @@ const FilterByCategoryCollapse: React.FC = () => {
         count: countPicape,
       },
     ];
-  }, []);
+  }, [cars]);
 
   function handleCollapse() {
     setIsCollapseUp(!isCollapseUp);
