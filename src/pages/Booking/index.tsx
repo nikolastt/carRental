@@ -17,6 +17,7 @@ const Booking: React.FC = () => {
   const [carsInScreen, setCarsInScreen] = useState<ICarProps[]>([]);
   const [cars, setCars] = useState<ICarProps[]>([]);
   const filter = useSelector((state: RootState) => state.filterByCategory);
+  const carsRedux = useSelector((state: RootState) => state.carsSlice.cars);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -30,7 +31,12 @@ const Booking: React.FC = () => {
       dispatch(getCars(arrayCars));
     }
 
-    getCarsDb();
+    if (carsRedux.length > 0) {
+      setCars(carsRedux);
+    } else {
+      console.log("Pegou banco");
+      getCarsDb();
+    }
   }, []);
 
   function handleCarsInScreen() {

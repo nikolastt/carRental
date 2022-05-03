@@ -36,6 +36,7 @@ const pageServices: React.FC = () => {
   const dispatch = useDispatch();
 
   const [cars, setCars] = useState<ICarProps[]>([]);
+  const carsRedux = useSelector((state: RootState) => state.carsSlice.cars);
   const [carsInPromotion, setCarsInPromotion] = useState<ICarProps[]>([]);
 
   useEffect(() => {
@@ -49,7 +50,12 @@ const pageServices: React.FC = () => {
       dispatch(getCars(arrayCars));
     }
 
-    getCarsDb();
+    if (carsRedux.length > 0) {
+      setCars(carsRedux);
+    } else {
+      console.log("Pegou banco");
+      getCarsDb();
+    }
   }, []);
 
   return (
