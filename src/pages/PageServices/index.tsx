@@ -37,7 +37,6 @@ const pageServices: React.FC = () => {
 
   const [cars, setCars] = useState<ICarProps[]>([]);
   const carsRedux = useSelector((state: RootState) => state.carsSlice.cars);
-  const [carsInPromotion, setCarsInPromotion] = useState<ICarProps[]>([]);
 
   useEffect(() => {
     async function getCarsDb() {
@@ -59,9 +58,18 @@ const pageServices: React.FC = () => {
 
   const getUniqueNumbers = useMemo(() => {
     const numbers: number[] = [];
+    let totalCarsInPromotion = 0;
+    const getTotalCarsInPromotion = () => {
+      if (cars.length < 4) {
+        totalCarsInPromotion = cars.length;
+      } else {
+        totalCarsInPromotion = 4;
+      }
+    };
+    getTotalCarsInPromotion();
 
     if (cars.length > 0) {
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < totalCarsInPromotion; i++) {
         var temp = Math.floor(Math.random() * (cars?.length || 5));
         if (numbers.includes(temp)) {
           i--;
@@ -96,7 +104,10 @@ const pageServices: React.FC = () => {
             </Title>
 
             <InfoDate>
-              <h1>Datas para alugar o carro </h1>
+              <h1>
+                Datas para alugar o carro <br />
+                (a ser implementada){" "}
+              </h1>
             </InfoDate>
           </SideLeft>
           <Img>

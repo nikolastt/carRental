@@ -10,8 +10,11 @@ import { RootState } from "../../redux/store";
 import AppBar from "../../components/AppBar";
 
 import { getCars, ICarProps } from "../../redux/carsSlice";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, limit } from "firebase/firestore";
 import { db } from "../../firebase";
+
+import Pagination from "@mui/material/Pagination";
+import { Box } from "@mui/material";
 
 const Booking: React.FC = () => {
   const [carsInScreen, setCarsInScreen] = useState<ICarProps[]>([]);
@@ -23,8 +26,9 @@ const Booking: React.FC = () => {
   useEffect(() => {
     async function getCarsDb() {
       const arrayCars: any = [];
-      const querySnapshot = await getDocs(collection(db, "cars"));
-      querySnapshot.forEach((doc) => {
+      const querySnapshot = query(collection(db, "cars"), limit(3));
+      const documents = await getDocs(querySnapshot);
+      documents.forEach((doc) => {
         arrayCars.push(doc.data());
       });
       setCars(arrayCars);
@@ -78,6 +82,16 @@ const Booking: React.FC = () => {
                 />
               );
             })}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+                marginTop: "1.5rem",
+              }}
+            >
+              <Pagination count={3} variant="outlined" />
+            </Box>
           </Content>
         ) : (
           <Content>

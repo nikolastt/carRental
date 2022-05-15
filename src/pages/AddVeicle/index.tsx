@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   Container,
@@ -28,6 +28,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Snackbar,
 } from "@mui/material";
 
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -225,7 +226,7 @@ const AddVeicle: React.FC = () => {
                     <MenuItem value={"Sedan"}>Sedan</MenuItem>
                     <MenuItem value={"SUV"}>SUV</MenuItem>
                     <MenuItem value={"picape"}>Picape</MenuItem>
-                    <MenuItem value={"ustilitario"}>Utilitario</MenuItem>
+                    <MenuItem value={"utilitario"}>Utilitario</MenuItem>
                   </Select>
                   {categoryError && (
                     <FormHelperText>Campo em branco</FormHelperText>
@@ -366,40 +367,55 @@ const AddVeicle: React.FC = () => {
           <ContentFooter>
             {errorInputInDataBase && (
               <Box>
-                <Alert
-                  severity="error"
-                  onClose={() => {
-                    setErrorInputInDataBase(false);
-                  }}
+                <Snackbar
+                  open={errorInputInDataBase}
+                  autoHideDuration={5000}
+                  onClose={() => setErrorInputInDataBase(false)}
                 >
-                  Erro ao cadastrar o veiculo - Tente novamente!
-                </Alert>
+                  <Alert
+                    onClose={() => setErrorInputInDataBase(false)}
+                    severity="error"
+                    sx={{ width: "100%" }}
+                  >
+                    Erro ao cadastrar o veículo - Tente novamente!
+                  </Alert>
+                </Snackbar>
               </Box>
             )}
 
             {errorCarDuplicate && (
               <Box>
-                <Alert
-                  severity="error"
-                  onClose={() => {
-                    setErrorCarDuplicate(false);
-                  }}
+                <Snackbar
+                  open={errorCarDuplicate}
+                  autoHideDuration={5000}
+                  onClose={() => setErrorCarDuplicate(false)}
                 >
-                  Erro - Veículo já foi cadastrado!
-                </Alert>
+                  <Alert
+                    onClose={() => setErrorCarDuplicate(false)}
+                    severity="error"
+                    sx={{ width: "100%" }}
+                  >
+                    Erro - Veículo já foi cadastrado!
+                  </Alert>
+                </Snackbar>
               </Box>
             )}
 
             {successInputInDataBase && (
               <Box>
-                <Alert
-                  severity="success"
-                  onClose={() => {
-                    setSuccessInputInDataBase(false);
-                  }}
+                <Snackbar
+                  open={successInputInDataBase}
+                  autoHideDuration={5000}
+                  onClose={() => setSuccessInputInDataBase(false)}
                 >
-                  Veículo cadastrado com sucesso!
-                </Alert>
+                  <Alert
+                    onClose={() => setSuccessInputInDataBase(false)}
+                    severity="success"
+                    sx={{ width: "100%" }}
+                  >
+                    Veículo cadastrado com sucesso!
+                  </Alert>
+                </Snackbar>
               </Box>
             )}
 
