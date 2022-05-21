@@ -11,7 +11,7 @@ const darkThemeMUI = createTheme({
         primary: {
             main: '#EE7116',
             light: '#F49D4E',
-            dark: '##AB3C0B',
+            dark: '#AB3C0B',
             contrastText: '#ffffffff',
         },        
         secondary: {
@@ -28,7 +28,8 @@ const darkThemeMUI = createTheme({
           main: '#4AE04C'
         },
         info: {
-          main: '#02A2ED'
+          main: '#02A2ED',
+          
         },
 
         text: {
