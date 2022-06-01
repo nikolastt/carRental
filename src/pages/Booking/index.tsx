@@ -90,7 +90,7 @@ const Booking: React.FC = () => {
                 marginTop: "1.5rem",
               }}
             >
-              <Pagination count={collection.length} variant="outlined" />
+              <Pagination count={3} variant="outlined" />
             </Box>
           </Content>
         ) : (

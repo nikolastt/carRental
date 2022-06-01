@@ -14,6 +14,16 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 
+import { FcGoogle } from "react-icons/fc";
+
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../redux/store";
+
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { app } from "../../firebase/index";
+
+import { logOutUser, setUser } from "../../redux/userSlice";
+
 const pages = [
   { name: "Home", path: "/" },
   { name: "Veículos", path: "/booking" },
@@ -44,6 +54,57 @@ const ResponsiveAppBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const dispatch = useDispatch();
+
+  const handleGoogleLogin = async () => {
+    const provider = new GoogleAuthProvider();
+    const auth = getAuth(app);
+
+    await signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential?.accessToken;
+        const user = result.user;
+
+        dispatch(
+          setUser({
+            displayName: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL,
+            uid: user.uid,
+          })
+        );
+
+        sessionStorage.setItem(
+          "@AuthFirebaseGoogle:user",
+          JSON.stringify(user)
+        );
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.email;
+        const credential = GoogleAuthProvider.credentialFromError(error);
+      });
+  };
+
+  const user = useSelector((state: RootState) => state.userSlice.user);
+
+  const manageSettingsOptions = (option: string) => {
+    if (option === "Sair") {
+      handleCloseUserMenu();
+      dispatch(logOutUser());
+    }
+  };
+
+  React.useEffect(() => {
+    const sessionUser = sessionStorage.getItem("@AuthFirebaseGoogle:user");
+
+    if (sessionUser && !user.email) {
+      dispatch(setUser(JSON.parse(sessionUser)));
+    }
+  }, []);
 
   return (
     <AppBar
@@ -159,11 +220,23 @@ const ResponsiveAppBar = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Abrir configurações do perfil">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Nikolas Bitencourt" src="#" />
-              </IconButton>
-            </Tooltip>
+            {user.email ? (
+              <Tooltip title="Abrir configurações do perfil">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Nikolas Bitencourt" src={user?.photoURL} />
+                </IconButton>
+              </Tooltip>
+            ) : (
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={handleGoogleLogin}
+              >
+                login com
+                <FcGoogle size={35} style={{ marginLeft: "1rem" }} />
+              </Button>
+            )}
+
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"
@@ -181,7 +254,10 @@ const ResponsiveAppBar = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem
+                  key={setting}
+                  onClick={() => manageSettingsOptions(setting)}
+                >
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
